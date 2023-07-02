@@ -22,8 +22,33 @@ const getWalletBalance = async () =>{
     }
 }
 
+const airDropSol = async () =>{ 
+    try {
+
+        //1 Sol = 1000000000 Lamports
+        const connection = new Connection(clusterApiUrl("devnet"),'confirmed')  
+        const signature = await connection.requestAirdrop(publicKey,2*LAMPORTS_PER_SOL)
+
+        const latestBlockHash = await connection.getLatestBlockhash();
+
+        console.log("latestBlockHash: ",latestBlockHash)
+        console.log("Signature: ",signature)
+        await connection.confirmTransaction({
+            commitment: 'confirmed',
+            signature,
+            blockhash: latestBlockHash.blockhash,
+            lastValidBlockHeight: latestBlockHash.lastValidBlockHeight
+        })
+       
+        await getWalletBalance()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const main = async () =>{
     await getWalletBalance()
+    await airDropSol()
 }
 
 main()
