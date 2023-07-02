@@ -5,6 +5,12 @@ const {Connection, PublicKey, clusterApiUrl,Keypair,LAMPORTS_PER_SOL} = require(
 
 const wallet = new Keypair()
 
+const publicKey = wallet._keypair.publicKey
+const secretKey = wallet._keypair.secretKey
+
+// console.log("Wallet Public Key: ", publicKey.toString())
+// console.log("Wallet Secret Key: ", secretKey.toString())
+
 
 
 
